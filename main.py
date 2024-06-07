@@ -37,7 +37,7 @@ if openai_api_key:
         try:
             loader = CSVLoader(file_path='cargobrain-rates.csv')
             documents = loader.load()
-            vectordb = FAISS.from_documents(documents, embedding)
+            vectordb = FAISS.from_documents(documents, embedding, allow_dangerous_deserialization=True)
             vectordb.save_local(vectordb_file_path)
             st.success("Database created successfully.")
         except Exception as e:
