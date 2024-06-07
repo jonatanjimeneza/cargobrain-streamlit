@@ -49,19 +49,11 @@ if openai_api_key:
             documents = loader.load()
             retriever = FAISS.from_documents(documents, embedding).as_retriever(score_threshold=0.7)
 
-            template = """You are a helpful assistant knowledgeable about CargoBrain rates.
-            Based on the provided context from the CargoBrain rates database, answer the following question.
-            If the answer is not found in the context, respond "I don't know." Do not try to make up an answer.
+            template = """
 
             CONTEXT: {context}
 
             QUESTION: {question}
-
-            Instructions:
-            - Answer with the specific rate if the question asks for rates (e.g., "What is the rate for 500kg from BCN to FRA?").
-            - Provide information on origin, destination, and product if asked (e.g., "What products are available from MAD to MLE?").
-            - If multiple rates or information are relevant, list them clearly.
-            - Use information directly from the context without adding extra details.
             """
 
             prompt = PromptTemplate(template=template, input_variables=["context", "question"])
