@@ -49,14 +49,6 @@ if openai_api_key:
             documents = loader.load()
             retriever = FAISS.from_documents(documents, embedding).as_retriever(score_threshold=0.7)
 
-            template = """
-
-            CONTEXT: {context}
-
-            QUESTION: {question}
-            """
-
-            prompt = PromptTemplate(template=template, input_variables=["context", "question"])
             
             llm = load_LLM(openai_api_key=openai_api_key)
 
@@ -66,7 +58,6 @@ if openai_api_key:
                 retriever=retriever,
                 input_key="query",
                 return_source_documents=True,
-                prompt=prompt
             )
 
             return chain
