@@ -1,7 +1,7 @@
 import streamlit as st
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAI
-from langchain.document_loaders import CSVLoader
+from langchain.document_loaders.csv_loader import CSVLoader
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
@@ -45,8 +45,9 @@ if openai_api_key:
 
     def execute_chain():
         try:
-            vectordb = FAISS.load_local(vectordb_file_path, embedding)
-            retriever = vectordb.as_retriever(score_threshold=0.7)
+            loader = CSVLoader(file_path='cargobrain-rates.csv')
+            documents = loader.load()
+            retriever = FAISS.from_documents(documents, embedding).as_retriever(score_threshold=0.7)
 
             template = """You are a helpful assistant knowledgeable about CargoBrain rates.
             Based on the provided context from the CargoBrain rates database, answer the following question.
