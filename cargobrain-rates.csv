@@ -1,0 +1,5 @@
+Airline,Code,IATA Code,Origin,Destination,Product,Minimum,Q100,Q500,Q1000
+CargoBrain,CB,666,BCN,FRA,GCR,100,1.5,1.4,1.2
+CargoBrain,CB,666,MAD,FRA,GCR,100,1.4,1.2,1.1
+CargoBrain,CB,666,BCN,MLE,GCR,100,1.3,1.15,1.05
+CargoBrain,CB,666,MAD,MLE,GCR,100,1.15,1.05,1
