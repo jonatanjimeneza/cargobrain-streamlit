@@ -89,6 +89,3 @@ if openai_api_key:
             response = chain({"query": question})
             st.header("Answer")
             st.write(response['result'])
-            st.write("Source documents:")
-            for doc in response['source_documents']:
-                st.write(doc.page_content)
