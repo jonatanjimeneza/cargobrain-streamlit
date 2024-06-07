@@ -1,7 +1,7 @@
 import streamlit as st
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAI
-from langchain.document_loaders.csv_loader import CSVLoader
+from langchain.document_loaders import CSVLoader
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
@@ -37,7 +37,7 @@ if openai_api_key:
         try:
             loader = CSVLoader(file_path='cargobrain-rates.csv')
             documents = loader.load()
-            vectordb = FAISS.from_documents(documents, embedding, allow_dangerous_deserialization=True)
+            vectordb = FAISS.from_documents(documents, embedding)
             vectordb.save_local(vectordb_file_path)
             st.success("Database created successfully.")
         except Exception as e:
@@ -50,7 +50,7 @@ if openai_api_key:
 
             template = """You are a helpful assistant knowledgeable about CargoBrain rates.
             Based on the provided context from the CargoBrain rates database, answer the following question.
-            If the answer is not found in the context, respond "Sorry, We don't have option to your request" Do not try to make up an answer.
+            If the answer is not found in the context, respond "I don't know." Do not try to make up an answer.
 
             CONTEXT: {context}
 
